@@ -104,10 +104,10 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private static final String LOCKSCREEN_LOCK_ICON =
             "system:" + Settings.System.LOCKSCREEN_LOCK_ICON;
 
-    private boolean mLockIcon;
     private static final String LOCKSCREEN_BLUR =
             "system:" + Settings.System.LOCKSCREEN_BLUR;
 
+    private boolean mLockIcon;
     private float mLockScreenBlur;
 
     protected final Context mContext;
@@ -284,7 +284,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             mDockManager.addListener(mDockEventListener);
             mIsDocked = mDockManager.isDocked();
         }
-        Dependency.get(TunerService.class).addTunable(this, LOCKSCREEN_LOCK_ICON);
+        mTunerService.addTunable(this, LOCKSCREEN_LOCK_ICON);
         mTunerService.addTunable(this, LOCKSCREEN_BLUR);
     }
 
@@ -294,6 +294,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             case LOCKSCREEN_LOCK_ICON:
                 mLockIcon =
                     TunerService.parseIntegerSwitch(newValue, true);
+                break;
             case LOCKSCREEN_BLUR:
                 mLockScreenBlur =
                     (float) TunerService.parseInteger(newValue, 0) / 100f;
